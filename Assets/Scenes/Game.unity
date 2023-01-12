@@ -411,6 +411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 194a09ea8ae0eea41b2bd7029ac15f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  segmentPrefab: {fileID: 1609189204891066381, guid: 5918afdf4277a9d45ae680834f030f36, type: 3}
 --- !u!1 &1137102803
 GameObject:
   m_ObjectHideFlags: 0
@@ -869,7 +870,7 @@ GameObject:
   - component: {fileID: 2072517513}
   m_Layer: 0
   m_Name: Food
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
