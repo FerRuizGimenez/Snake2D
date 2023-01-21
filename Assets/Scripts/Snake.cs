@@ -10,6 +10,9 @@ public class Snake : MonoBehaviour
     public int initialSize = 4;
 
     private Vector2 input;
+    public float speed = 20f;
+    public float speedMultiplier = 1f;
+    private float nextUpdate;
 
     private void Start() 
     {
@@ -48,6 +51,12 @@ public class Snake : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        // Wait until the next update before proceeding
+        if(Time.time < nextUpdate)
+        {
+            return;
+        }
+
         // Set the new direction based on the input
         if(input != Vector2.zero)
         {
@@ -60,11 +69,12 @@ public class Snake : MonoBehaviour
             _segments[i].position = _segments[i - 1].position;
         }
 
-        this.transform.position = new Vector3(
-            Mathf.Round(this.transform.position.x) + _direction.x,
-            Mathf.Round(this.transform.position.y) + _direction.y,
-            0.0f
-        );               
+        float x = Mathf.Round(transform.position.x) + _direction.x;
+        float y = Mathf.Round(transform.position.y) + _direction.y;
+
+        transform.position = new Vector2(x, y);
+        nextUpdate = Time.time + (1f / (speed * speedMultiplier));
+              
     }
 
     private void Grow()
