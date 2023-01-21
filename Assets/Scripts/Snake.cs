@@ -103,6 +103,19 @@ public class Snake : MonoBehaviour
         this.transform.position = Vector3.zero;   
     }
 
+    public bool Occupies(float x, float y)
+    {
+        foreach(Transform segment in _segments)
+        {
+            if(segment.position.x == x && segment.position.y == y)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Food")

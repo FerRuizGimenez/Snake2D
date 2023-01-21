@@ -3,6 +3,12 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     public BoxCollider2D gridArea;
+    private Snake snake;
+
+    private void Awake() 
+    {
+        snake = FindObjectOfType<Snake>();     
+    }
 
     private void Start() 
     {
@@ -16,7 +22,27 @@ public class Food : MonoBehaviour
         float x = Random.Range(bounds.min.x, bounds.max.x);
         float y = Random.Range(bounds.min.y, bounds.max.y);
 
-        this.transform.position = new Vector3(Mathf.Round(x), Mathf.Round(y), 0.0f);
+        x = Mathf.Round(x);
+        y = Mathf.Round(y);
+
+        // Prevent food from spawning on the snake
+        while(snake.Occupies(x, y))
+        {
+            x++;
+
+            if(x > bounds.max.x)
+            {
+                x = bounds.min.x;
+                y++;
+                
+                if(y > bounds.max.y)
+                {
+                    y = bounds.min.y;
+                }
+            }
+        }
+
+        transform.position = new Vector2(x, y);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
