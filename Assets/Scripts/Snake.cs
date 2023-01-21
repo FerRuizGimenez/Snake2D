@@ -9,6 +9,8 @@ public class Snake : MonoBehaviour
 
     public int initialSize = 4;
 
+    private Vector2 input;
+
     private void Start() 
     {
         ResetState();
@@ -17,27 +19,40 @@ public class Snake : MonoBehaviour
  
     private void Update() 
     {
-        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        // Only allow turning up or down while moving in the x-axis
+        if(_direction.x != 0f)
         {
-            _direction = Vector2.up;
-        } 
-        else if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            _direction = Vector2.down;
-        }   
-        else if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            _direction = Vector2.left;
+            if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                input = Vector2.up;
+            } 
+            else if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                input = Vector2.down;
+            } 
         }
-        else if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        // Only allow turning left or right while moving in the y-axis
+        else if(_direction.y != 0f)
         {
-            _direction = Vector2.right;
+            if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                input = Vector2.left;
+            }
+            else if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                input = Vector2.right;
+            }
         }
+        
     }
 
     private void FixedUpdate() 
     {
-        //Debug.Log(_segments.Count);
+        // Set the new direction based on the input
+        if(input != Vector2.zero)
+        {
+            _direction = input;
+        }
 
         // This makes sure that sort of each segment is following the one in front of it
         for(int i = _segments.Count - 1; i > 0; i--)
