@@ -14,6 +14,8 @@ public class Snake : MonoBehaviour
     public float speedMultiplier = 1f;
     private float nextUpdate;
 
+    public GameObject gameOverPanel;
+
     private void Start() 
     {
         ResetState();
@@ -85,8 +87,10 @@ public class Snake : MonoBehaviour
         _segments.Add(segment); 
     }
 
-    private void ResetState()
+    public void ResetState()
     {
+        this.gameObject.SetActive(true);
+        gameOverPanel.SetActive(false);
         for(int i = 1; i < _segments.Count; i++)
         {
             Destroy(_segments[i].gameObject);
@@ -112,7 +116,6 @@ public class Snake : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
@@ -124,7 +127,9 @@ public class Snake : MonoBehaviour
         }
         else if(other.tag == "Obstacle")
         {
-            ResetState();
+            gameOverPanel.SetActive(true);
+            this.gameObject.SetActive(false);
+
         }
     }
 }
